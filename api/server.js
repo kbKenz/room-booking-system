@@ -13,7 +13,12 @@ const server = express()
 
 // Middleware
 server.use(bodyParser.json())
-server.use(cors({ credentials: true }))
+server.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.REACT_APP_FRONTEND_URL || 'https://your-frontend-domain.com' 
+    : 'http://localhost:3000',
+  credentials: true
+}))
 server.use(authMiddleware.initialize)
 
 // Routes

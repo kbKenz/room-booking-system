@@ -26,10 +26,9 @@ const signUp = (req, res, next) => {
       next(error)
       return
     }
+    req.user = user
+    next()
   })
-
-  req.user = user
-  next()
 }
 
 const signJWTForUser = (req, res) => {
