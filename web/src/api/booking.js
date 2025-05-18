@@ -61,8 +61,22 @@ export function makeBooking(data, existingBookings) {
 
 // Delete a room booking
 export function deleteBooking(roomId, bookingId) {
-  return api.delete(`/rooms/${roomId}/${bookingId}`)
-    .then(res => res.data)
+  // Ensure IDs are in string format for the API call
+  const safeRoomId = roomId.toString()
+  const safeBookingId = bookingId.toString()
+  
+  console.log(`API delete booking call: room=${safeRoomId}, booking=${safeBookingId}`)
+  
+  return api.delete(`/rooms/${safeRoomId}/${safeBookingId}`)
+    .then(res => {
+      console.log('API delete booking response:', res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.error('API delete booking error:', err)
+      // Re-throw the error so it can be caught by the calling function
+      throw err
+    })
 }
 
 export function updateStateRoom(self, updatedRoom, loadMyBookings) {

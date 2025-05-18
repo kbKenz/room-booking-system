@@ -6,17 +6,29 @@ import { findRoomInfo } from '../helpers/bookingForm.js'
 
 const BookingModal = props => {
   const deleteBooking = () => {
-    // First check if the booking has the required properties
-    if (!props.selectedBooking || 
-        !props.selectedBooking.roomId || 
-        !props.selectedBooking._id) {
+    // Make sure the booking exists
+    if (!props.selectedBooking) {
       alert('Unable to delete this booking - missing booking information')
       props.onCloseBooking()
       return
     }
     
-    const roomID = props.selectedBooking.roomId
-    const bookingID = props.selectedBooking._id
+    // Get room ID - try different potential property names
+    const roomID = props.selectedBooking.roomId || props.selectedBooking.RoomId || props.selectedBooking.room_id
+    
+    // Get booking ID - try different potential property names
+    const bookingID = props.selectedBooking.id || props.selectedBooking._id || props.selectedBooking.booking_id
+    
+    // Log the values for debugging
+    console.log('Deleting booking:', { roomID, bookingID, selectedBooking: props.selectedBooking })
+    
+    // Make sure we have both IDs
+    if (!roomID || !bookingID) {
+      alert('Unable to delete this booking - missing booking information')
+      props.onCloseBooking()
+      return
+    }
+    
     props.onDeleteBooking(roomID, bookingID)
     props.onCloseBooking()
   }

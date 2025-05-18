@@ -9,7 +9,20 @@ const ColumnCell = props => {
   // Add the day's bookings to a 24 hour array
   let dayHours = bookingArray(bookings)
 
-  console.log(dayHours)
+  // Prepare a booking for display and ensure it has the needed properties
+  const prepareBookingForDisplay = (booking) => {
+    // Make sure we have a roomId property
+    if (!booking.roomId && props.roomId) {
+      booking.roomId = props.roomId
+    }
+    
+    // Make sure we have an _id property
+    if (!booking._id && booking.id) {
+      booking._id = booking.id
+    }
+    
+    return booking
+  }
 
   // Extract the corresponding data for a single hour from the 24 hour array
   let bookingData = dayHours[props.hour]
@@ -31,6 +44,10 @@ const ColumnCell = props => {
 
     let secondBookingData = bookingData[0].secondHalfHour ?
                             bookingData[0] : bookingData[1]
+
+    // Prepare the bookings for display
+    firstBookingData = prepareBookingForDisplay(firstBookingData)
+    secondBookingData = prepareBookingForDisplay(secondBookingData)
 
     columnData =
     <table className="table--nested">
@@ -60,6 +77,9 @@ const ColumnCell = props => {
   
   // If there is a booking object, but only for the first half of the hour, return a nested table to split the table data for that cell into two rows.
   } else if (bookingData.firstHalfHour) {
+    // Prepare the booking for display
+    bookingData = prepareBookingForDisplay(bookingData)
+    
     columnData =
         <table className="table--nested">
           <tbody>
@@ -81,6 +101,9 @@ const ColumnCell = props => {
 
   // If there is a booking object, but only for the second half of the hour, return a nested table to split the table data for that cell into two rows
   } else if (bookingData.secondHalfHour) {
+    // Prepare the booking for display
+    bookingData = prepareBookingForDisplay(bookingData)
+    
     columnData =
         <table className="table--nested">
           <tbody>
@@ -101,6 +124,9 @@ const ColumnCell = props => {
 
   // If there is a booking object for the full hour, return a single <td> cell
   } else {
+    // Prepare the booking for display
+    bookingData = prepareBookingForDisplay(bookingData)
+    
     columnData =
       <td
         onClick={() => props.onShowBooking(bookingData)}

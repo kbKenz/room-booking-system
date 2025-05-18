@@ -112,8 +112,16 @@ class App extends Component {
 
   // Deletes a booking from the database and updates the React state
   onDeleteBooking = (roomId, bookingId) => {
+    console.log(`Attempting to delete booking: roomId=${roomId}, bookingId=${bookingId}`)
+    
+    if (!roomId || !bookingId) {
+      alert('Unable to delete booking: Missing room ID or booking ID')
+      return
+    }
+    
     deleteBooking(roomId, bookingId)
       .then(updatedRoom => {
+        console.log('Booking deleted, updated room:', updatedRoom)
         alert('Booking successfully deleted')
         updateStateRoom(
           this,
@@ -121,7 +129,10 @@ class App extends Component {
           this.loadMyBookings,
         )
       })
-      .catch(error => console.error(error.message))
+      .catch(error => {
+        console.error('Error deleting booking:', error)
+        alert('Error deleting booking: ' + (error.message || 'Unknown error'))
+      })
   }
 
   setRoom = id => {
