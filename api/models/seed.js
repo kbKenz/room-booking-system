@@ -21,10 +21,10 @@ async function seedDatabase() {
 
     // Create rooms
     const rooms = [
-      // Level 8
+      // Floor 1
       {
         name: 'Room 1',
-        floor: '8',
+        floor: '1',
         capacity: 18,
         assets: {
           pcLab: true
@@ -32,7 +32,7 @@ async function seedDatabase() {
       },
       {
         name: 'Room 2',
-        floor: '8',
+        floor: '1',
         capacity: 18,
         assets: {
           projector: true
@@ -40,7 +40,7 @@ async function seedDatabase() {
       },
       {
         name: 'Room 3',
-        floor: '8',
+        floor: '1',
         capacity: 18,
         assets: {
           projector: true,
@@ -49,50 +49,175 @@ async function seedDatabase() {
       },
       {
         name: 'Room 4',
-        floor: '8',
+        floor: '1',
         capacity: 24
       },
       {
         name: 'Room 5',
-        floor: '8',
+        floor: '1',
         capacity: 18,
         assets: {
           opWalls: true
         }
       },
+      // Floor 2
+      {
+        name: 'Room 1',
+        floor: '2',
+        capacity: 18
+      },
+      {
+        name: 'Room 2',
+        floor: '2',
+        capacity: 18
+      },
+      {
+        name: 'Room 3',
+        floor: '2',
+        capacity: 18
+      },
+      {
+        name: 'Room 4',
+        floor: '2',
+        capacity: 18
+      },
+      {
+        name: 'Room 5',
+        floor: '2',
+        capacity: 18
+      },
+      // Floor 3
+      {
+        name: 'Room 1',
+        floor: '3',
+        capacity: 18,
+        assets: {
+          tv: true
+        }
+      },
+      {
+        name: 'Room 2',
+        floor: '3',
+        capacity: 18
+      },
+      {
+        name: 'Room 3',
+        floor: '3',
+        capacity: 18,
+        assets: {
+          tv: true
+        }
+      },
+      {
+        name: 'Room 4',
+        floor: '3',
+        capacity: 18,
+        assets: {
+          tv: true
+        }
+      },
+      {
+        name: 'Studio 1',
+        floor: '3',
+        capacity: 18
+      },
+      {
+        name: 'Studio 2',
+        floor: '3',
+        capacity: 18
+      },
+      {
+        name: 'Lab 1',
+        floor: '3',
+        capacity: 20,
+        assets: {
+          macLab: true
+        }
+      },
+      // Floor 4
+      {
+        name: 'Room 1',
+        floor: '4',
+        capacity: 20,
+        assets: {
+          opWalls: true
+        }
+      },
+      {
+        name: 'Room 2',
+        floor: '4',
+        capacity: 20,
+        assets: {
+          opWalls: true
+        }
+      },
+      {
+        name: 'Room 3',
+        floor: '4',
+        capacity: 20,
+        assets: {
+          opWalls: true
+        }
+      },
+      {
+        name: 'Room 4',
+        floor: '4',
+        capacity: 20,
+        assets: {
+          projector: true,
+          opWalls: true
+        }
+      },
+      {
+        name: 'Room 5',
+        floor: '4',
+        capacity: 20,
+        assets: {
+          projector: true
+        }
+      },
       {
         name: 'Room 6',
-        floor: '8',
-        capacity: 18
+        floor: '4',
+        capacity: 20,
+        assets: {
+          projector: true
+        }
       },
       {
         name: 'Room 7',
-        floor: '8',
-        capacity: 18
+        floor: '4',
+        capacity: 20,
+        assets: {
+          projector: true
+        }
       },
       {
         name: 'Room 8',
-        floor: '8',
-        capacity: 18
+        floor: '4',
+        capacity: 40,
+        assets: {
+          projector: true
+        }
       },
       {
         name: 'Room 9',
-        floor: '8',
-        capacity: 18
+        floor: '4',
+        capacity: 16
       },
       {
         name: 'Room 10',
-        floor: '8',
-        capacity: 18
+        floor: '4',
+        capacity: 20
       },
       {
         name: 'Room 11',
-        floor: '8',
+        floor: '4',
         capacity: 18
       },
       {
         name: 'Room 12',
-        floor: '8',
+        floor: '4',
         capacity: 18,
         assets: {
           tv: true
@@ -100,12 +225,12 @@ async function seedDatabase() {
       },
       {
         name: 'Room 13',
-        floor: '8',
+        floor: '4',
         capacity: 18
       },
       {
         name: 'Room 14',
-        floor: '8',
+        floor: '4',
         capacity: 18,
         assets: {
           tv: true
@@ -113,7 +238,7 @@ async function seedDatabase() {
       },
       {
         name: 'Room 15',
-        floor: '8',
+        floor: '4',
         capacity: 18,
         assets: {
           tv: true
@@ -121,32 +246,32 @@ async function seedDatabase() {
       },
       {
         name: 'Studio 11',
-        floor: '8',
+        floor: '4',
         capacity: 18
       },
       {
         name: 'Studio 12',
-        floor: '8',
+        floor: '4',
         capacity: 18
       },
       {
         name: 'Studio 13',
-        floor: '8',
+        floor: '4',
         capacity: 18
       },
       {
         name: 'Studio 14',
-        floor: '8',
+        floor: '4',
         capacity: 18
       },
       {
         name: 'Studio 15',
-        floor: '8',
+        floor: '4',
         capacity: 18
       },
       {
         name: 'Lab 01',
-        floor: '8',
+        floor: '4',
         capacity: 20,
         assets: {
           macLab: true

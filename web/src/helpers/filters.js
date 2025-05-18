@@ -2,7 +2,13 @@ import moment from 'moment'
 import { formatTime, timeSelectOptions} from '../helpers/bookingForm'
 
 // Initial room filter parameters
-export const floorParams = [ {name: '8', value: false}, {name: '13', value: false}, {name: 'all', value: false}]
+export const floorParams = [ 
+  {name: '1', value: false}, 
+  {name: '2', value: false}, 
+  {name: '3', value: false}, 
+  {name: '4', value: false}, 
+  {name: 'all', value: false}
+]
 
 // initial feature filter parameters
 export const filterParams = [ 
