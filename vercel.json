@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "build",
+  "routes": [
+    { "src": "/api/(.*)", "dest": "https://room-booking-api-demo.onrender.com/api/$1" },
+    { "src": "/admin/(.*)", "dest": "https://room-booking-api-demo.onrender.com/admin/$1" },
+    { "src": "/static/(.*)", "dest": "https://room-booking-api-demo.onrender.com/static/$1" },
+    { "src": "/media/(.*)", "dest": "https://room-booking-api-demo.onrender.com/media/$1" },
+    { "src": "/(.*)", "dest": "/build/$1" }
+  ]
+} 

@@ -1,26 +1,35 @@
-version: '3'
-
 services:
   api:
     build:
       context: ./django_room_booking_api
       dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
     environment:
       - DEBUG=1
-      - SECRET_KEY=your_django_secret_key
+      - SECRET_KEY=development_secret_key
       - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+    expose:
+      - "8000"
     restart: unless-stopped
 
   web:
     build:
       context: ./web
       dockerfile: Dockerfile
+    environment:
+      - REACT_APP_API_URL=http://localhost/api
+    expose:
+      - "80"
+    depends_on:
+      - api
+    restart: unless-stopped
+      
+  nginx:
+    image: nginx:alpine
     ports:
       - "80:80"
-    environment:
-      - REACT_APP_API_URL=http://localhost:8000
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/conf.d/default.conf
     depends_on:
+      - web
       - api
     restart: unless-stopped 

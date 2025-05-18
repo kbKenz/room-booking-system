@@ -1,8 +1,10 @@
 import axios from "axios";
 import { rememberToken, getValidToken } from "./token";
 
-// const baseURL = process.env.REACT_APP_API_URL;
-const baseURL = "http://localhost:8000";
+// For Vercel deployment, the API URL should be the full URL of your Django backend
+const baseURL = process.env.REACT_APP_API_URL || 
+               process.env.NEXT_PUBLIC_API_URL || 
+               "https://room-booking-api-demo.onrender.com/api";
 
 // Create an axios instance with CORS credentials
 const api = axios.create({
