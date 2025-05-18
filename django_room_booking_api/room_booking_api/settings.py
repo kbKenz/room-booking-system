@@ -165,6 +165,7 @@ SIMPLE_JWT = {
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://web-nnj5rgfzo-kenzs-projects-3fc0f5e8.vercel.app'
 ]
 
 CORS_ALLOW_METHODS = [
@@ -173,11 +174,15 @@ CORS_ALLOW_METHODS = [
     'PUT',
     'DELETE',
     'OPTIONS',
+    'PATCH',
 ]
 
 CORS_ALLOW_HEADERS = [
     'Content-Type',
     'Authorization',
+    'X-CSRFToken',
+    'X-Requested-With',
+    'X-Real-IP',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
