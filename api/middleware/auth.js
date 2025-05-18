@@ -54,7 +54,7 @@ const signUp = async (req, res, next) => {
       email: req.body.email.toLowerCase(),
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      password: hashedPassword
+      password: req.body.password
     })
     
     req.user = user

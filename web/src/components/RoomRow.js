@@ -39,7 +39,7 @@ const rowMapper = (dayHours, props) => {
               <td className={`table__cell`}>
                 <span
                   onClick={() => props.onShowBooking(firstBookingData)}
-                  className={`table__cell--booked table__cell--${firstBookingData.businessUnit // Class name will show the business unit that made the booking, and whether the <td> element should be fully shaded, or half shaded (indicating a half-hour booking)
+                  className={`table__cell--booked table__cell--${firstBookingData.purpose // Class name will show the business unit that made the booking, and whether the <td> element should be fully shaded, or half shaded (indicating a half-hour booking)
                     .replace(/ /g, '-')
                     .toLowerCase()}
                   `}
@@ -50,7 +50,7 @@ const rowMapper = (dayHours, props) => {
               <td className={`table__cell`}>
                 <span
                   onClick={() => props.onShowBooking(secondBookingData)}
-                  className={`table__cell--booked table__cell--${secondBookingData.businessUnit // Class name will show the business unit that made the booking, and whether the <td> element should be fully shaded, or half shaded (indicating a half-hour booking)
+                  className={`table__cell--booked table__cell--${secondBookingData.purpose // Class name will show the business unit that made the booking, and whether the <td> element should be fully shaded, or half shaded (indicating a half-hour booking)
                     .replace(/ /g, '-')
                     .toLowerCase()}
                   `}
@@ -69,7 +69,7 @@ const rowMapper = (dayHours, props) => {
         <td className={`table__cell`}>
           <span
             onClick={() => props.onShowBooking(bookingData)}
-            className={`table__cell--booked table__cell--${bookingData.businessUnit // Class name will show the business unit that made the booking, and whether the <td> element should be fully shaded, or half shaded (indicating a half-hour booking)
+            className={`table__cell--booked table__cell--${bookingData.purpose // Class name will show the business unit that made the booking, and whether the <td> element should be fully shaded, or half shaded (indicating a half-hour booking)
               .replace(/ /g, '-')
               .toLowerCase()}
             ${bookingData.firstHalfHour ? 'table__cell--first-half-hour' : ''}

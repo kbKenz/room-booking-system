@@ -44,10 +44,6 @@ const Booking = sequelize.define('Booking', {
   duration: {
     type: DataTypes.INTEGER
   },
-  businessUnit: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   purpose: {
     type: DataTypes.STRING,
     allowNull: false

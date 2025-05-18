@@ -114,9 +114,6 @@ const BookingModal = props => {
           {formatBookingDate()}
         </p>
         <p className="modal__paragraph">
-          <strong>Business Unit </strong>{props.selectedBooking.businessUnit || 'Not specified'}
-        </p>
-        <p className="modal__paragraph">
           <strong>Purpose </strong>{props.selectedBooking.purpose || 'Not specified'}
         </p>
         <p className="modal__paragraph">

@@ -42,7 +42,6 @@ function BookingElement({
     <div className="booking__box">
       <div className="booking__innerbox--left">
         <h3 className="header__heading--sub--alt header__heading--small">{moment(bookingData.bookingStart).format('dddd, MMMM Do YYYY')}</h3>
-        <p>{bookingData.businessUnit}</p>
         <p>{bookingData.purpose}</p>
       </div>
       <div className="booking__innerbox--middle">

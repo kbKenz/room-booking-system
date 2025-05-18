@@ -54,22 +54,22 @@ const ColumnCell = props => {
       <tbody>
       <tr className="table__row--no-border table__row--border-bottom">
           <td
-        onClick={() => props.onShowBooking(firstBookingData)} className={`table__cell--${firstBookingData.businessUnit
+        onClick={() => props.onShowBooking(firstBookingData)} className={`table__cell--${firstBookingData.purpose
               .replace(/ /g, '-')
             .toLowerCase()} table__cell--subcell`
             }
           >
-            {firstBookingData.businessUnit}
+            {firstBookingData.purpose}
           </td>
         </tr>
         <tr className="table__row--no-border">
           <td
-        onClick={() => props.onShowBooking(secondBookingData)} className={`table__cell--${secondBookingData.businessUnit
+        onClick={() => props.onShowBooking(secondBookingData)} className={`table__cell--${secondBookingData.purpose
               .replace(/ /g, '-')
             .toLowerCase()} table__cell--subcell`
             }
           >
-            {secondBookingData.businessUnit}
+            {secondBookingData.purpose}
           </td>
         </tr>
       </tbody>
@@ -85,12 +85,12 @@ const ColumnCell = props => {
           <tbody>
           <tr className="table__row--no-border table__row--border-bottom">
               <td
-            onClick={() => props.onShowBooking(bookingData)} className={`table__cell--${bookingData.businessUnit
+            onClick={() => props.onShowBooking(bookingData)} className={`table__cell--${bookingData.purpose
                   .replace(/ /g, '-')
                 .toLowerCase()} table__cell--subcell`
                 }
               >
-                {bookingData.businessUnit}
+                {bookingData.purpose}
               </td>
             </tr>
             <tr className="table__row--no-border">
@@ -111,12 +111,12 @@ const ColumnCell = props => {
               <td className="table__cell--subcell available">Available</td>
             </tr>
             <tr className="table__row--no-border">
-          <td onClick={() => props.onShowBooking(bookingData)} className={`table__cell--${bookingData.businessUnit
+          <td onClick={() => props.onShowBooking(bookingData)} className={`table__cell--${bookingData.purpose
                   .replace(/ /g, '-')
                   .toLowerCase()} table__cell--subcell`
                 }
               >
-                {bookingData.businessUnit}
+                {bookingData.purpose}
               </td>
             </tr>
           </tbody>
@@ -130,11 +130,11 @@ const ColumnCell = props => {
     columnData =
       <td
         onClick={() => props.onShowBooking(bookingData)}
-      className={`table__cell--${bookingData.businessUnit
+      className={`table__cell--${bookingData.purpose
           .replace(/ /g, '-')
           .toLowerCase()}`
         }>
-          {bookingData.businessUnit}
+          {bookingData.purpose}
       </td>
   }
   return columnData
