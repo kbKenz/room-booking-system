@@ -71,15 +71,33 @@ export function deleteBooking(roomId, bookingId) {
   
   console.log(`API delete booking call: room=${safeRoomId}, booking=${safeBookingId}`)
   
+  // Add detailed data validation
+  if (!safeRoomId || safeRoomId === 'undefined' || safeRoomId === 'null') {
+    console.error('Invalid roomId:', roomId);
+    return Promise.reject(new Error('Invalid room ID'));
+  }
+  
+  if (!safeBookingId || safeBookingId === 'undefined' || safeBookingId === 'null') {
+    console.error('Invalid bookingId:', bookingId);
+    return Promise.reject(new Error('Invalid booking ID'));
+  }
+  
   return api.delete(`/rooms/${safeRoomId}/${safeBookingId}`)
     .then(res => {
       console.log('API delete booking response:', res.data)
       return res.data
     })
     .catch(err => {
-      console.error('API delete booking error:', err)
-      // Re-throw the error so it can be caught by the calling function
-      throw err
+      console.error('API delete booking error:', err);
+      // Provide more detailed error information
+      if (err.response) {
+        console.error('Error response:', err.response.data);
+        throw new Error(`Server error: ${err.response.status} - ${err.response.data.error || 'Unknown error'}`);
+      } else if (err.request) {
+        throw new Error('Network error: No response received from server');
+      } else {
+        throw new Error(`Request error: ${err.message}`);
+      }
     })
 }
 

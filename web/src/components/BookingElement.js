@@ -9,10 +9,34 @@ function BookingElement({
   onDeleteBooking,
   roomData
 }) {
+  // Log booking data to debug IDs
+  console.log('BookingElement - bookingData:', bookingData);
+  
+  // Handle both possible field names for IDs
+  const roomId = bookingData.roomId || bookingData.RoomId;
+  const bookingId = bookingData.id || bookingData._id || bookingData.id;
+  
+  console.log(`Delete would use roomId=${roomId}, bookingId=${bookingId}`);
 
-  const roomInfo = findRoomInfo(bookingData.roomId, roomData)
+  const roomInfo = findRoomInfo(roomId, roomData)
   const startTime = momentTimezone.tz(bookingData.bookingStart, 'Australia/Sydney').format('h.mma')
   const endTime = momentTimezone.tz(bookingData.bookingEnd, 'Australia/Sydney').format('h.mma')
+
+  // Handle the delete action with proper ID checking
+  const handleDelete = () => {
+    if (!roomId) {
+      console.error('Missing roomId in booking data:', bookingData);
+      alert('Cannot delete: Missing room ID');
+      return;
+    }
+    if (!bookingId) {
+      console.error('Missing bookingId in booking data:', bookingData);
+      alert('Cannot delete: Missing booking ID');
+      return;
+    }
+    console.log(`Deleting booking with roomId=${roomId}, bookingId=${bookingId}`);
+    onDeleteBooking(roomId, bookingId);
+  };
 
   return (
     <div className="booking__box">
@@ -28,7 +52,7 @@ function BookingElement({
       </div>
       <div className="booking__innerbox--right">
         <Button
-          onClick={() => onDeleteBooking(bookingData.roomId, bookingData._id)}
+          onClick={handleDelete}
           text={`Delete`}
         />
       </div>

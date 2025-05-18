@@ -122,7 +122,13 @@ class App extends Component {
       return
     }
     
-    deleteBooking(roomId, bookingId)
+    // Convert to string to ensure consistent format for API
+    const roomIdStr = roomId.toString();
+    const bookingIdStr = bookingId.toString();
+    
+    console.log(`Calling deleteBooking with roomId=${roomIdStr}, bookingId=${bookingIdStr}`);
+    
+    deleteBooking(roomIdStr, bookingIdStr)
       .then(updatedRoom => {
         console.log('Booking deleted, updated room:', updatedRoom)
         alert('Booking successfully deleted')
