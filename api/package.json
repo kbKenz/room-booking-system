@@ -43,6 +43,7 @@
     "seed": "node models/seed.js",
     "start": "node server.js",
     "migrate": "node migrate-to-sqlite.js",
+    "migrate:isadmin": "node migrations/add-isadmin-field.js",
     "deploy": "now -E production.env",
     "rmdeploy": "now rm room-booking-system"
   }

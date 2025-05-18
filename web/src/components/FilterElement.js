@@ -92,6 +92,10 @@ function FilterElement({
         <h4 className="form__heading form__heading--filter">Availability</h4>
           <div onChange={(event) => onSetAvailabilityParam(event.target.value)} >
             <div className="form_group">
+              <input type="radio" id="allAvailability" value="all" name="availability" className="form__input--radio" checked={availabilityParam === 'all' ? true : false} />
+              <label for="allAvailability" className="form__label form__label--inline">All</label>
+            </div>
+            <div className="form_group">
               <input type="radio" id="fullyAvailable" value="fullyAvail" name="availability" className="form__input--radio" checked={availabilityParam === 'fullyAvail' ? true : false} />
               <label for="fullyAvailable" className="form__label form__label--inline">Fully Available</label>
             </div>

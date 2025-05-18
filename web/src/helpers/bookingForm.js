@@ -61,9 +61,29 @@ export const endTimeSelectOptions = [
 
 // formats the time extracted from the time inputs into an array, eg 8:30 => [8, 30]
 export const formatTime = (time) => {
-  let formatedTimeArray = []
-  formatedTimeArray = time.split(':').map((item) => parseInt(item, 10))
-  return formatedTimeArray
+  console.log('Formatting time:', time);
+  
+  if (!time) {
+    console.error('Invalid time value:', time);
+    return [0, 0];
+  }
+  
+  try {
+    // Split the time string and convert to integers
+    let formatedTimeArray = time.split(':').map((item) => parseInt(item, 10));
+    
+    // Make sure we have valid numbers
+    if (formatedTimeArray.length !== 2 || isNaN(formatedTimeArray[0]) || isNaN(formatedTimeArray[1])) {
+      console.error('Invalid time format:', time, formatedTimeArray);
+      return [0, 0];
+    }
+    
+    console.log('Formatted time array:', formatedTimeArray);
+    return formatedTimeArray;
+  } catch (error) {
+    console.error('Error formatting time:', error);
+    return [0, 0];
+  }
 }
 
 // Find the Room and floor number from the booking ID

@@ -6,8 +6,22 @@ import { transformRoomData } from '../utils/dataAdapter'
 // Function to receive booking data (AEST) and convert to JS Date object
 // Data expected in [year, month, date, hours, seconds] format
 const dateUTC = (dataArray) => {
-  // Ensure date data is saved in AEST and then converted to a Date object in UTC
-  return momentTimezone(dataArray).tz('Australia/Sydney').toDate()
+  // Don't apply the timezone twice - the data is already in Sydney time
+  // Just create a date object directly from the array
+  console.log('Creating date from array:', dataArray);
+  
+  // Create the date string in ISO format (YYYY-MM-DDTHH:MM:00)
+  const [year, month, day, hour, minute] = dataArray;
+  const dateStr = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`;
+  
+  console.log('ISO date string:', dateStr);
+  
+  // Create a moment in Sydney timezone
+  const sydneyTime = momentTimezone.tz(dateStr, 'Australia/Sydney');
+  console.log('Sydney time:', sydneyTime.format());
+  
+  // Convert to UTC time
+  return sydneyTime.toDate();
 }
 
 // Make a room booking
@@ -15,6 +29,19 @@ export function makeBooking(data, existingBookings) {
   // Convert booking data to UTC Date objects
   let bookingStart = dateUTC(data.startDate)
   let bookingEnd = dateUTC(data.endDate)
+
+  // Log the original and converted times for debugging
+  console.log('Original startDate array:', data.startDate)
+  console.log('Original endDate array:', data.endDate)
+  console.log('Converted bookingStart:', bookingStart)
+  console.log('Converted bookingEnd:', bookingEnd)
+  
+  // Also log in readable format
+  console.log('Booking time (Sydney):', 
+    momentTimezone.tz(bookingStart, 'Australia/Sydney').format('YYYY-MM-DD HH:mm'),
+    'to',
+    momentTimezone.tz(bookingEnd, 'Australia/Sydney').format('YYYY-MM-DD HH:mm')
+  )
 
   // Convert booking Date objects into a number value
   let newBookingStart = bookingStart.getTime()
@@ -92,6 +119,10 @@ export function deleteBooking(roomId, bookingId) {
       // Provide more detailed error information
       if (err.response) {
         console.error('Error response:', err.response.data);
+        // Specifically handle permission errors
+        if (err.response.status === 403) {
+          throw new Error('Permission denied: Only admins or the person who created the booking can delete it');
+        }
         throw new Error(`Server error: ${err.response.status} - ${err.response.data.error || 'Unknown error'}`);
       } else if (err.request) {
         throw new Error('Network error: No response received from server');
