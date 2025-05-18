@@ -73,6 +73,9 @@ class App extends Component {
 
   setCalendarDate = date => {
     this.setState({ calendarDate: date })
+    
+    // Ensure roomData is fetched for this specific date
+    this.getRoomData()
   }
 
   onShowBooking = booking => {
@@ -232,6 +235,45 @@ class App extends Component {
     });
     
     this.setState({ userBookings: myBookings });
+  }
+
+  // Fetch room data from the API based on current calendar date
+  getRoomData = () => {
+    const { decodedToken } = this.state
+    const signedIn = !!decodedToken
+    
+    if (signedIn) {
+      // display loading page
+      this.setState({ loading: true })
+      
+      // load all of the rooms from the database
+      listRooms()
+        .then(rooms => {
+          // Transform the room data if necessary
+          let formattedRooms = rooms;
+          // Check if the data format is different than expected
+          if (rooms && rooms.length > 0 && !rooms[0]._id && rooms[0].id) {
+            formattedRooms = transformRoomData(rooms);
+          }
+          this.setState({ roomData: formattedRooms })
+
+          // load the current user's bookings
+          this.loadMyBookings()
+          
+          // the state's current room defaults to first room if rooms exist
+          if (formattedRooms && formattedRooms.length > 0 && !this.state.currentRoom) {
+            const room = formattedRooms[0];
+            this.setRoom(room._id)
+          }
+          
+          // toggle loading page off
+          this.setState({ loading: false })
+        })
+        .catch(error => {
+          console.error('Error loading room data', error)
+          this.setState({ error, loading: false })
+        })
+    }
   }
 
   render() {
@@ -439,43 +481,6 @@ class App extends Component {
     )
   }
 
-  load() {
-    const { decodedToken } = this.state
-    const signedIn = !!decodedToken
-
-    if (signedIn) {
-      // display loading page
-      this.setState({ loading: true })
-      // load all of the rooms from the database
-      listRooms()
-        .then(rooms => {
-          // Transform the room data if necessary
-          let formattedRooms = rooms;
-          // Check if the data format is different than expected
-          if (rooms && rooms.length > 0 && !rooms[0]._id && rooms[0].id) {
-            formattedRooms = transformRoomData(rooms);
-          }
-          this.setState({ roomData: formattedRooms })
-
-          // load the current user's bookings
-          this.loadMyBookings()
-          
-          // the state's current room defaults to first room if rooms exist
-          if (formattedRooms && formattedRooms.length > 0) {
-            const room = formattedRooms[0];
-            this.setRoom(room._id)
-          }
-          
-          // toggle loading page off
-          this.setState({ loading: false })
-        })
-        .catch(error => {
-          console.error('Error loading room data', error)
-          this.setState({ error, loading: false })
-        })
-    }
-  }
-
   // When the App first renders
   componentDidMount() {
     this.load()
@@ -490,6 +495,10 @@ class App extends Component {
     }
   }
 
+  // Load initial data
+  load() {
+    this.getRoomData()
+  }
 }
 
 export default App
