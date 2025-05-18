@@ -458,15 +458,15 @@ class App extends Component {
                                 onToggleRecurring={this.onToggleRecurring}
                               />
                             </div>
-                              <BookingModal
-                                selectedBooking={selectedBooking}
-                                onCloseBooking={this.onCloseBooking}
-                                onDeleteBooking={onDeleteBooking}
-                                roomData={roomData}
-                                user={decodedToken.email}
-                              />
-                        </div>
-                      )}
+                            <BookingModal
+                              selectedBooking={selectedBooking}
+                              onCloseBooking={this.onCloseBooking}
+                              onDeleteBooking={onDeleteBooking}
+                              roomData={roomData}
+                              user={decodedToken.email}
+                            />
+                          </div>
+                        )}
                     </Fragment>
                   )
                 )} />
