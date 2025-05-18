@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: room-booking-api
+    env: python
+    buildCommand: bash build.sh
+    startCommand: cd django_room_booking_api && gunicorn room_booking_api.wsgi:application
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: False
+      - key: DATABASE_URL
+        fromDatabase:
+          name: room-booking-db
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+databases:
+  - name: room-booking-db
+    databaseName: room_booking
+    user: room_booking

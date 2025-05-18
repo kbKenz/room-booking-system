@@ -1,0 +1,1 @@
+web: cd django_room_booking_api && gunicorn room_booking_api.wsgi --log-file - 

@@ -1,37 +1,43 @@
 # Room Booking System
+
 A room booking system built with MongoDB, Express, Node.js and ReactJS.
 
 ![Logo](docs/logo.png)
 
 [Presentation](http://slides.com/juliaryan/room-booking-system/fullscreen)
+
 ## Table of Contents
 
-* [Getting started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-* [About project](#about-project)
-  * [Problem](#problem)
-  * [Solution](#solution)
-* [Planning](#planning)
-  * [Audience](#audience)
-  * [User stories](#user-stories)
-  * [Entity Relationship Diagram](#entity-relationship-diagram)
-    * [Version One](#version-one)
-    * [Version Two](#version-two)
-  * [Trello](#trello)
-* [Design](#design)
-  * [Wireframes](#wireframes)
-  * [Prototype](#prototype)
-* [Development](#development)
-  * [Requirements](#requirements)
-  * [Technologies](#technologies)
-* [Challenges and final thoughts](#challenges-and-final-thoughts)
-* [Team](#team)
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [About project](#about-project)
+  - [Problem](#problem)
+  - [Solution](#solution)
+- [Planning](#planning)
+  - [Audience](#audience)
+  - [User stories](#user-stories)
+  - [Entity Relationship Diagram](#entity-relationship-diagram)
+    - [Version One](#version-one)
+    - [Version Two](#version-two)
+  - [Trello](#trello)
+- [Design](#design)
+  - [Wireframes](#wireframes)
+  - [Prototype](#prototype)
+- [Development](#development)
+  - [Requirements](#requirements)
+  - [Technologies](#technologies)
+- [Challenges and final thoughts](#challenges-and-final-thoughts)
+- [Team](#team)
 
 ## Getting started
+
 These instructions will get you a copy of the project up and running on your local machine for development purposes.
+
 ### Prerequisites
+
 #### Back-end:
+
 - MongoDB
 - Express
 - Node.js
@@ -66,8 +72,11 @@ These instructions will get you a copy of the project up and running on your loc
     "prettier": "^1.10.2"
   }
 ```
+
 #### Front-end:
+
 - React.js
+
 ```json
   "dependencies": {
     "axios": "^0.17.1",
@@ -89,8 +98,11 @@ These instructions will get you a copy of the project up and running on your loc
     "stylus": "^0.54.5"
   }
 ```
+
 ### Installation
+
 Clone the repo
+
 ```
 git clone https://github.com/julia-/room-booking-system
 ```
@@ -103,6 +115,7 @@ yarn install
 ```
 
 Change to the `web` folder and install development and producation dependencies.
+
 ```
 cd web
 yarn install
@@ -111,6 +124,7 @@ yarn install
 You will need to set up MongoDB. See [MongoDB](https://docs.mongodb.com/) for instructions.
 
 Seed the data
+
 ```
 yarn seed
 ```
@@ -118,12 +132,14 @@ yarn seed
 For Google OAuth you will need to register an application with Google. See [passport-google-oauth2](https://github.com/jaredhanson/passport-google-oauth2) for further instructions.
 
 Go to the `api` folder and start the server.
+
 ```
 cd api
 yarn dev
 ```
 
 Go to the `web` folder and run the script start script.
+
 ```
 cd api
 yarn start
@@ -132,6 +148,7 @@ yarn start
 Open in your browser and navigate to http://localhost:3000. You access the back-end on http://localhost:7000.
 
 ## About project
+
 You are to design, build, deploy, and present an application built for a real world customer.
 
 Find a business or organisation nearby to Coder Academy to build an application for.
@@ -139,13 +156,17 @@ Find a business or organisation nearby to Coder Academy to build an application 
 Meet with the business owner or organisation manager to find out what challenges they face. Find a problem that you can solve with an application and present your ideas to the client.
 
 ### Problem
+
 The client has forty rooms over two floors available for use by staff, teachers and students. The booking of these rooms is currently managed using a basic spreadsheet system. This method is inflexible, cumbersome and does not allow for a high degree of specificity with respect to booking times. It also does not give the client a clear understanding of how their rooms are used and how the use of these resources can be optimised.
+
 ### Solution
+
 A web-based application that allows the client (including its administrative staff, teachers and students) to login from anywhere to easily, accurately and quickly make room bookings.
 
 This will help to ensure that room resources are used as fully-utilised as possible, whilst avoiding double-bookings and other common user frustrations. It will also make room booking statistics available to the client's staff and management to assist their planning and decision-making.
 
 ## Planning
+
 We began the planning process by meeting with the client to better understand the problem and to see how the existing system worked. We also gathered information about what the client would like to expect in the new system. We then looked at other booking systems on Hotel websites and room booking systems used by libraries such as LibCal.
 
 From then we began thinking about what documents and fields would be needed for the database and how we could nest or reference data from the documents. While developing the ERD, we also started working out how we could best display the data to avoid the problems that the client has with the existing system. We developed wireframes for day, week and month view and a prototype using Figma.
@@ -157,12 +178,14 @@ Using Trello we began adding all tasks and delegating work between each member o
 ![Project Work Breakvbown](docs/RoomBookingSystem-ProjectWorkBreakdown.png)
 
 ### Audience
+
 - Management staff
 - Business unit representative
 - Administration staff
 - Teachers
 
 ### User Stories
+
 **Note** The user stories which apply to lower-level users (for example, a basic user) also apply to high-level users.
 
 #### All staff
@@ -173,7 +196,7 @@ Using Trello we began adding all tasks and delegating work between each member o
 
 **In order to** see if there are available rooms on a specific date, **as a** Staff Member, **I want to** be able to pick a date and see an overview of all available rooms and availability for that date.
 
-**In order to** find a room with a projector, **as a** Staff Member, **I want to** be able to filter out rooms that don’t have a projector.
+**In order to** find a room with a projector, **as a** Staff Member, **I want to** be able to filter out rooms that don't have a projector.
 
 **In order to** find two rooms that can be combined, **as a** Staff Member, **I want to** be able to filter rooms to only show rooms that can be joined.
 
@@ -235,29 +258,41 @@ Using Trello we began adding all tasks and delegating work between each member o
 **In order to** book a room for a large event, **as a** Business Unit Representative, **I want to** be able to see available rooms that can be combined.
 
 **In order to** book a room that has twenty seats, **as a** Business Unit Representative, **I want to** be able to see all the available rooms that have 20 or more seats.
+
 ### Entity Relationship Diagram
 
 #### Version 1
+
 ![Entity Relationship Diagram | Version 1](docs/RoomBookingSystem-ERD-v1.png)
+
 #### Version 2
+
 ![Entity Relationship Diagram | Version 2](docs/RoomBookingSystem-ERD-v2.png)
+
 ## Design
+
 We designed the application to be an intuitive and simple, yet powerful way to navigate, analyse and create bookings. This ultimately enables the efficient use of resources.
 
 ### Wireframes
 
 [View wireframes in Figma](https://www.figma.com/file/M5AfR3iuOLO437LBDP1p9IXX/Room-Booking-System-Final)
+
 #### Room View
+
 ![Desktop | Room View](docs/Desktop-RoomView.png)
 
 #### Booking View
+
 ![Desktop | Booking View](docs/Desktop-BookingView.png)
 
 ### Prototype
+
 [View prototype in Figma](https://www.figma.com/proto/M5AfR3iuOLO437LBDP1p9IXX/Room-Booking-System-Final?scaling=contain&node-id=13%3A966)
+
 ## Development
 
 ### Requirements
+
 [x] Backend - Node.js
 [x] Frontend - ReactJS
 [x] MongoDB and Mongoose
@@ -269,9 +304,11 @@ We designed the application to be an intuitive and simple, yet powerful way to n
 [x] README
 
 ### Trello
+
 ![Trello | Room Booking System](docs/RoomBookingSystem-Trello.png)
 
 ### Technologies
+
 - Node.js
 - Express
 - MongoDB
@@ -280,15 +317,18 @@ We designed the application to be an intuitive and simple, yet powerful way to n
 - Moment.js
 - MomentTimezone.js
 - Stylus
+
 ## Challenges and final thoughts
 
 ### Challenges
+
 - Filtering
 - Validations
 - Google OAuth + JWT
 - Working with dates and times
 
 ## Future developments
+
 - Weekly and monthly views
 - Searching
 - User permissions
@@ -297,6 +337,55 @@ We designed the application to be an intuitive and simple, yet powerful way to n
 - Google Calendar
 
 ## Team
+
 - [George](https://github.com/tagma-1)
 - [Nick](https://github.com/nick-son)
 - [Julia](https://github.com/julia-)
+
+## Deployment to Render
+
+This application is configured for deployment on Render.
+
+### Deployment Steps
+
+1. Create a Render account at [render.com](https://render.com)
+
+2. Connect your GitHub repository to Render
+
+3. Render will automatically detect the `render.yaml` configuration file and set up:
+
+   - A web service for the Django API
+   - A PostgreSQL database
+
+4. Render will:
+   - Install dependencies from requirements.txt
+   - Run the build script (build.sh)
+   - Start the application using gunicorn
+
+### Environment Variables
+
+The following environment variables are configured in `render.yaml`:
+
+- `SECRET_KEY`: Auto-generated secure key
+- `DEBUG`: Set to False for production
+- `DATABASE_URL`: Connection string to the PostgreSQL database
+- `PYTHON_VERSION`: Set to 3.11.0
+
+### Manual Setup (Alternative)
+
+If you prefer to set up services manually:
+
+1. Create a PostgreSQL database on Render
+
+2. Create a web service with:
+   - Build Command: `bash build.sh`
+   - Start Command: `cd django_room_booking_api && gunicorn room_booking_api.wsgi:application`
+   - Environment Variables:
+     - SECRET_KEY (generate a secure random key)
+     - DEBUG=False
+     - DATABASE_URL (copy from your PostgreSQL instance)
+     - RENDER_EXTERNAL_HOSTNAME (will be set automatically by Render)
+
+### Frontend Configuration
+
+After deploying, update your frontend application with the new API URL from Render.
