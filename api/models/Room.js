@@ -1,76 +1,111 @@
-const mongoose = require('./init')
-const Schema = mongoose.Schema
+const { DataTypes } = require('sequelize')
+const sequelize = require('./db')
 const moment = require('moment')
 
-const bookingSchema = new Schema({
-  _bookingId: Schema.Types.ObjectId,
-  user: { type: Schema.ObjectId, ref: 'User' },
-  bookingStart: Date,
-  bookingEnd: Date,
-  startHour: Number,
-  duration: Number,
-  recurring: [],
-  businessUnit: { type: String, required: true },
-  purpose: { type: String, required: true },
-  roomId: { type: Schema.ObjectId, ref: 'Room' }
+const Room = sequelize.define('Room', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  floor: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  capacity: {
+    type: DataTypes.INTEGER
+  },
+  assets: {
+    type: DataTypes.JSON,
+    defaultValue: {
+      macLab: false,
+      pcLab: false,
+      projector: false,
+      tv: false,
+      opWalls: false,
+      whiteBoard: false
+    }
+  }
+}, {
+  timestamps: true
 })
 
-// Validation to ensure a room cannot be double-booked
-bookingSchema.path('bookingStart').validate(function(value) {
-  // Extract the Room Id from the query object
-  let roomId = this.roomId
-  
-  // Convert booking Date objects into a number value
-  let newBookingStart = value.getTime()
-  let newBookingEnd = this.bookingEnd.getTime()
-  
-  // Function to check for booking clash
-  let clashesWithExisting = (existingBookingStart, existingBookingEnd, newBookingStart, newBookingEnd) => {
-    if (newBookingStart >= existingBookingStart && newBookingStart < existingBookingEnd || 
-      existingBookingStart >= newBookingStart && existingBookingStart < newBookingEnd) {
+const Booking = sequelize.define('Booking', {
+  bookingStart: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  bookingEnd: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  startHour: {
+    type: DataTypes.INTEGER
+  },
+  duration: {
+    type: DataTypes.INTEGER
+  },
+  businessUnit: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  purpose: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  recurring: {
+    type: DataTypes.JSON,
+    defaultValue: []
+  }
+}, {
+  timestamps: true,
+  hooks: {
+    beforeCreate: async (booking) => {
+      await checkBookingConflicts(booking)
+    },
+    beforeUpdate: async (booking) => {
+      await checkBookingConflicts(booking)
+    }
+  }
+})
+
+// Set up associations
+Room.hasMany(Booking)
+Booking.belongsTo(Room)
+
+const User = require('./User')
+Booking.belongsTo(User)
+
+// Function to check booking conflicts
+async function checkBookingConflicts(booking) {
+  // Skip validation if no roomId is provided yet
+  if (!booking.RoomId) return
+
+  const newBookingStart = booking.bookingStart.getTime()
+  const newBookingEnd = booking.bookingEnd.getTime()
+
+  // Find existing bookings for the same room
+  const existingBookings = await Booking.findAll({
+    where: {
+      RoomId: booking.RoomId,
+      id: {
+        [sequelize.Sequelize.Op.ne]: booking.id || 0 // Exclude current booking when updating
+      }
+    }
+  })
+
+  // Check for booking conflicts
+  for (const existingBooking of existingBookings) {
+    const existingStart = new Date(existingBooking.bookingStart).getTime()
+    const existingEnd = new Date(existingBooking.bookingEnd).getTime()
+
+    if ((newBookingStart >= existingStart && newBookingStart < existingEnd) || 
+        (existingStart >= newBookingStart && existingStart < newBookingEnd)) {
       
       throw new Error(
-        `Booking could not be saved. There is a clash with an existing booking from ${moment(existingBookingStart).format('HH:mm')} to ${moment(existingBookingEnd).format('HH:mm on LL')}`
+        `Booking could not be saved. There is a clash with an existing booking from ${moment(existingStart).format('HH:mm')} to ${moment(existingEnd).format('HH:mm on LL')}`
       )
     }
-    return false
   }
-  
-  // Locate the room document containing the bookings
-  return Room.findById(roomId)
-    .then(room => {
-      // Loop through each existing booking and return false if there is a clash
-      return room.bookings.every(booking => {
-        
-        // Convert existing booking Date objects into number values
-        let existingBookingStart = new Date(booking.bookingStart).getTime()
-        let existingBookingEnd = new Date(booking.bookingEnd).getTime()
+}
 
-        // Check whether there is a clash between the new booking and the existing booking
-        return !clashesWithExisting(
-          existingBookingStart, 
-          existingBookingEnd, 
-          newBookingStart, 
-          newBookingEnd
-        )
-      })
-    })
-}, `{REASON}`)
-
-
-const roomSchema = new Schema({
-  name: { type: String, index: true, required: true },
-  floor: { type: String, required: true },
-  capacity: Number,
-  assets: {
-    macLab: { type: Boolean, default: false },
-    pcLab: { type: Boolean, default: false },
-    projector: { type: Boolean, default: false },
-    tv: { type: Boolean, default: false },
-    opWalls: { type: Boolean, default: false },
-    whiteBoard: { type: Boolean, default: false }
-  },
-  bookings: [bookingSchema]
-})
-
-const Room = (module.exports = mongoose.model('Room', roomSchema))
+module.exports = { Room, Booking }

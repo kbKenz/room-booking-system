@@ -1,16 +1,36 @@
-const mongoose = require('./init')
-const passportLocalMongoose = require('passport-local-mongoose')
+const { DataTypes } = require('sequelize')
+const sequelize = require('./db')
+const bcrypt = require('bcrypt')
 
-const userSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  email: { type: String, index: true }
+const User = sequelize.define('User', {
+  firstName: {
+    type: DataTypes.STRING
+  },
+  lastName: {
+    type: DataTypes.STRING
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING
+  }
+}, {
+  timestamps: true
 })
 
-userSchema.plugin(passportLocalMongoose, {
-  usernameField: 'email',
-  usernameLowerCase: true,
-  session: false
+// Instance method to validate password
+User.prototype.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.password)
+}
+
+// Hook to hash password before saving
+User.beforeCreate(async (user) => {
+  if (user.password) {
+    user.password = await bcrypt.hash(user.password, 10)
+  }
 })
 
-const User = (module.exports = mongoose.model('User', userSchema))
+module.exports = User

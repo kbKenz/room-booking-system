@@ -1,14 +1,20 @@
-const Room = require('./Room')
-const User = require('./User')
+const sequelize = require('./db')
 
-Room.deleteMany()
-  .then(() => {
-    console.log('Deleted rooms')
+const dropDatabase = async () => {
+  try {
+    // This will drop all tables defined through Sequelize
+    await sequelize.drop()
+    console.log('All tables have been dropped!')
     process.exit()
-  })
+  } catch (error) {
+    console.error('Error dropping tables:', error)
+    process.exit(1)
+  }
+}
 
-User.deleteMany()
-  .then(() => {
-    console.log('Deleted users')
-    process.exit()
-  })
+// Only run if this script is executed directly
+if (require.main === module) {
+  dropDatabase()
+}
+
+module.exports = dropDatabase

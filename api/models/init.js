@@ -1,14 +1,20 @@
-const mongoose = require('mongoose')
+const sequelize = require('./db')
+const { Room, Booking } = require('./Room')
+const User = require('./User')
 
-mongoose.Promise = global.Promise
+// Define any additional model relationships here if needed
 
-// Connect with useMongoClient for Mongoose 4.x compatibility
-mongoose.connect(process.env.MONGO_URI, { useMongoClient: true })
-  .then(() => {
-    console.log('Successfully connected to database')
-  })
-  .catch(error => {
-    console.error('Error connecting to MongoDB database', error)
-  })
+// Sync all models with the database
+const initDb = async () => {
+  try {
+    await sequelize.sync()
+    console.log('Database tables synchronized successfully')
+  } catch (error) {
+    console.error('Error synchronizing database tables:', error)
+  }
+}
 
-module.exports = mongoose
+// Run database initialization
+initDb()
+
+module.exports = sequelize

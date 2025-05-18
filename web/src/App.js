@@ -31,6 +31,7 @@ import Calendar from './components/Calendar'
 import BookingModal from './components/BookingModal'
 import { floorParams, filterParams, capacityParams, onFilterByFloor, onFilterByFeature, onFilterByCapacity, onFilterByAvailablity } from './helpers/filters'
 import { initialRoom } from './helpers/rooms'
+import { transformRoomData } from './utils/dataAdapter'
 
 class App extends Component {
   state = {
@@ -193,20 +194,33 @@ class App extends Component {
   }
 
   loadMyBookings = () => {
-    let myBookings = []
-    const userId = this.state.decodedToken.sub
+    let myBookings = [];
+    
+    // Guard clause to prevent errors if decodedToken or roomData is missing
+    if (!this.state.decodedToken || !this.state.roomData) {
+      console.log('User token or room data not available');
+      this.setState({ userBookings: [] });
+      return;
+    }
+    
+    const userId = this.state.decodedToken.sub;
+    
     // Loop through all the rooms
     this.state.roomData.forEach(room => {
-      // Loop through all the bookings in 'room'
-      room.bookings.forEach(booking => {
-        if (booking.user === userId) {
-          // Push all bookings where the current userId is equal to the booking's userId into myBookings
-          booking.roomId = room._id
-          myBookings.push(booking)
-        }
-      })
-    })
-    this.setState({ userBookings: myBookings })
+      // Make sure room.bookings exists
+      if (room.bookings && Array.isArray(room.bookings)) {
+        // Loop through all the bookings in 'room'
+        room.bookings.forEach(booking => {
+          if (booking.user === userId) {
+            // Push all bookings where the current userId is equal to the booking's userId into myBookings
+            booking.roomId = room._id;
+            myBookings.push(booking);
+          }
+        });
+      }
+    });
+    
+    this.setState({ userBookings: myBookings });
   }
 
   render() {
@@ -424,18 +438,29 @@ class App extends Component {
       // load all of the rooms from the database
       listRooms()
         .then(rooms => {
-          this.setState({ roomData: rooms })
+          // Transform the room data if necessary
+          let formattedRooms = rooms;
+          // Check if the data format is different than expected
+          if (rooms && rooms.length > 0 && !rooms[0]._id && rooms[0].id) {
+            formattedRooms = transformRoomData(rooms);
+          }
+          this.setState({ roomData: formattedRooms })
+
           // load the current user's bookings
           this.loadMyBookings()
-          // the state's current room defaults to first room
-          const room = this.state.roomData[0]
-          this.setRoom(room._id)
+          
+          // the state's current room defaults to first room if rooms exist
+          if (formattedRooms && formattedRooms.length > 0) {
+            const room = formattedRooms[0];
+            this.setRoom(room._id)
+          }
+          
           // toggle loading page off
           this.setState({ loading: false })
         })
         .catch(error => {
           console.error('Error loading room data', error)
-          this.setState({ error })
+          this.setState({ error, loading: false })
         })
     }
   }
