@@ -19,6 +19,9 @@ const formatAssetName = asset => {
 
 // Accepts the search date in 'YYYY/MM/DD' format and all of a room's bookings and filters the array for bookings that match the search date
 const dailyBookings = (currentDate, roomBookings) => {
+  // Add a null check - if roomBookings is undefined or null, return an empty array
+  if (!roomBookings) return []
+  
   const filteredBookings = roomBookings.filter(
     (
       booking // Check if the booking is for the current date
