@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: room-booking-api-demo
+    name: room-booking-system-demo
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn room_booking_api.wsgi:application
@@ -10,4 +10,4 @@ services:
       - key: DEBUG
         value: "False"
       - key: DJANGO_ALLOWED_HOSTS
-        value: ".onrender.com,room-booking-system.vercel.app,web-ma5uecf5f-kenzs-projects-3fc0f5e8.vercel.app,web-cnodfi14v-kenzs-projects-3fc0f5e8.vercel.app"
+        value: ".onrender.com,web-eygbh335e-kenzs-projects-3fc0f5e8.vercel.app"

@@ -1,7 +1,7 @@
 http://room-booking-system.netlify.com/* https://room-booking-system.netlify.com/ 301!
 
 /* /index.html 200
-/api/* https://room-booking-api-demo.onrender.com/api/:splat 200
-/admin/* https://room-booking-api-demo.onrender.com/admin/:splat 200
-/static/* https://room-booking-api-demo.onrender.com/static/:splat 200
-/media/* https://room-booking-api-demo.onrender.com/media/:splat 200
+/api/* https://room-booking-system-demo.onrender.com/api/:splat 200
+/admin/* https://room-booking-system-demo.onrender.com/admin/:splat 200
+/static/* https://room-booking-system-demo.onrender.com/static/:splat 200
+/media/* https://room-booking-system-demo.onrender.com/media/:splat 200
