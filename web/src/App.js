@@ -406,7 +406,7 @@ class App extends Component {
                               />
                             </div>
                             <div className="sidebar__box">
-                              <Key />
+
                             </div>
                           </div>
                           <div className="content">
