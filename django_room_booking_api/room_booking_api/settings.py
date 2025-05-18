@@ -180,7 +180,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://room-booking-system.vercel.app',
     'https://web-ma5uecf5f-kenzs-projects-3fc0f5e8.vercel.app',
-    'https://web-cnodfi14v-kenzs-projects-3fc0f5e8.vercel.app'
+    'https://web-cnodfi14v-kenzs-projects-3fc0f5e8.vercel.app',
+    'https://web-nnj5rgfzo-kenzs-projects-3fc0f5e8.vercel.app'
 ]
 
 # Allow all CORS for deployment - will be restricted later
