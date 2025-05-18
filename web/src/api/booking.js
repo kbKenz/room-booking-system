@@ -1,6 +1,7 @@
 import moment from 'moment'
 import momentTimezone from 'moment-timezone'
 import api from './init'
+import { transformRoomData } from '../utils/dataAdapter'
 
 // Function to receive booking data (AEST) and convert to JS Date object
 // Data expected in [year, month, date, hours, seconds] format
@@ -65,11 +66,14 @@ export function deleteBooking(roomId, bookingId) {
 }
 
 export function updateStateRoom(self, updatedRoom, loadMyBookings) {
+  // Transform the updatedRoom to ensure it has the right format
+  const transformedRoom = transformRoomData([updatedRoom])[0];
+  
   self.setState((previousState) => {
     // Find the relevant room in React State and replace it with the new room data
     const updatedRoomData = previousState.roomData.map((room) => {
-      if (room._id === updatedRoom._id) {
-        return updatedRoom
+      if (room._id === transformedRoom._id) {
+        return transformedRoom
       } else {
         return room
       }
@@ -77,8 +81,10 @@ export function updateStateRoom(self, updatedRoom, loadMyBookings) {
     return {
       // Update the room data in application state
       roomData: updatedRoomData,
-      currentRoom: updatedRoom
+      currentRoom: transformedRoom
     }
+  }, () => {
+    // Call loadMyBookings as a callback after state is updated
+    loadMyBookings()
   })
-  loadMyBookings()
 }
