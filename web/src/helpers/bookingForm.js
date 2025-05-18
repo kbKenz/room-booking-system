@@ -68,12 +68,20 @@ export const formatTime = (time) => {
 
 // Find the Room and floor number from the booking ID
 export const findRoomInfo = (roomId, roomData) => {
-  let roomInfo
-  roomData.forEach(room => {
-    if (room._id === roomId) {
-      roomInfo = room
-    }
-  })
-  return roomInfo
+  // Handle cases where roomData is missing or roomId is undefined
+  if (!roomData || !Array.isArray(roomData) || roomId === undefined || roomId === null) {
+    return { name: 'Room not found', floor: 'N/A' }
+  }
+
+  // Convert string ID to number if needed (API may return numeric IDs)
+  const searchId = roomId.toString()
+  
+  // Find the room that matches the ID
+  const roomInfo = roomData.find(room => 
+    room._id === searchId || room._id === roomId || room.id === parseInt(roomId)
+  )
+  
+  // Return default values if room not found
+  return roomInfo || { name: 'Room not found', floor: 'N/A' }
 }
 
