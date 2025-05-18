@@ -48,13 +48,12 @@ const signUp = async (req, res, next) => {
       return res.status(400).send('A user with this email already exists.')
     }
     
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    
+    // Create user without manually hashing the password - let the model's hook handle it
     const user = await User.create({
       email: req.body.email.toLowerCase(),
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      password: hashedPassword
+      password: req.body.password // No hashing here - the model's beforeCreate hook will do it
     })
     
     req.user = user
