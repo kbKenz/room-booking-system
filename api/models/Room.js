@@ -52,6 +52,10 @@ const Booking = sequelize.define('Booking', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
   recurring: {
     type: DataTypes.JSON,
     defaultValue: []

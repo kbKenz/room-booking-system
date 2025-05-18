@@ -46,11 +46,14 @@ export function makeBooking(data, existingBookings) {
 
   // Save the booking to the database and return the booking if there are no clashes and the new booking time is not in the past
   if (!bookingClash && validDate && validRecurring) {
+    console.log('Sending booking data:', data); // Log the data for debugging
+    
     return api.put(`/rooms/${data.roomId}`, {
       bookingStart: bookingStart,
       bookingEnd: bookingEnd,
       businessUnit: data.businessUnit,
       purpose: data.purpose,
+      description: data.description, // Add description field
       roomId: data.roomId,
       recurring: data.recurringData
     })
