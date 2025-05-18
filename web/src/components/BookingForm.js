@@ -56,12 +56,25 @@ function BookingForm({ onMakeBooking, user, roomData, date, updateCalendar, onSh
             // Data from input
             const formData = event.target.elements
             const roomId = roomData._id
-            // startDate data
+            
+            // Debug the selected times
+            console.log('Form start time:', formData.startTime.value)
+            console.log('Form end time:', formData.endTime.value)
+            
+            // startDate data - ensure correct format
             const startTime = formatTime(formData.startTime.value)
             const startDate = [...dateArray, ...startTime]
-            // endDate data
+            // endDate data - ensure correct format
             const endTime = formatTime(formData.endTime.value)
             const endDate = [...dateArray, ...endTime]
+            
+            // Log the arrays for debugging
+            console.log('Date array:', dateArray)
+            console.log('Start time array:', startTime)
+            console.log('End time array:', endTime)
+            console.log('Complete start date array:', startDate)
+            console.log('Complete end date array:', endDate)
+            
             // Booking specifics
             let recurringEnd = handleEndDate(formData.recurringEndDate.value.split('-'))
             const recurringType = formData.recurring.value
