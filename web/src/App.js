@@ -218,22 +218,46 @@ class App extends Component {
     }
     
     const userId = this.state.decodedToken.sub;
+    const userEmail = this.state.decodedToken.email;
+    console.log('Current user ID from token:', userId);
+    console.log('Current user email from token:', userEmail);
+    console.log('Room data available:', this.state.roomData.length);
     
     // Loop through all the rooms
-    this.state.roomData.forEach(room => {
+    this.state.roomData.forEach((room, index) => {
       // Make sure room.bookings exists
       if (room.bookings && Array.isArray(room.bookings)) {
+        console.log(`Room ${room.name} has ${room.bookings.length} bookings`);
+        
+        // Log the first booking details to check the structure
+        if (room.bookings.length > 0) {
+          console.log('Sample booking structure:', JSON.stringify(room.bookings[0]));
+        }
+        
         // Loop through all the bookings in 'room'
         room.bookings.forEach(booking => {
-          if (booking.user === userId) {
-            // Push all bookings where the current userId is equal to the booking's userId into myBookings
-            booking.roomId = room._id;
+          // Log each booking for debugging
+          console.log(`Checking booking:`, booking);
+          
+          // Check all possible user ID fields
+          if (booking.user === userId || 
+              booking.userId === userId || 
+              booking.userId === parseInt(userId) || 
+              booking.UserId === userId || 
+              booking.UserId === parseInt(userId) ||
+              booking.user === userEmail ||
+              booking.userEmail === userEmail) {
+            
+            // Push all bookings where the current userId matches into myBookings
+            booking.roomId = room._id || room.id;
             myBookings.push(booking);
+            console.log('Found matching booking:', booking);
           }
         });
       }
     });
     
+    console.log('Found user bookings:', myBookings.length);
     this.setState({ userBookings: myBookings });
   }
 

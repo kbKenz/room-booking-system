@@ -53,7 +53,8 @@ export function makeBooking(data, existingBookings) {
       bookingEnd: bookingEnd,
       businessUnit: data.businessUnit,
       purpose: data.purpose,
-      description: data.description, // Add description field
+      description: data.description,
+      userEmail: data.user, // Store the user's email
       roomId: data.roomId,
       recurring: data.recurringData
     })
