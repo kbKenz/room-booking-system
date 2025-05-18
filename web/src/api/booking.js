@@ -119,6 +119,10 @@ export function deleteBooking(roomId, bookingId) {
       // Provide more detailed error information
       if (err.response) {
         console.error('Error response:', err.response.data);
+        // Specifically handle permission errors
+        if (err.response.status === 403) {
+          throw new Error('Permission denied: Only admins or the person who created the booking can delete it');
+        }
         throw new Error(`Server error: ${err.response.status} - ${err.response.data.error || 'Unknown error'}`);
       } else if (err.request) {
         throw new Error('Network error: No response received from server');

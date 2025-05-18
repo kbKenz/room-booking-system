@@ -158,6 +158,61 @@ router.delete('/rooms/:id/:bookingId', requireJWT, async (req, res) => {
   try {
     const { id, bookingId } = req.params
     
+    console.log('==== DELETE BOOKING REQUEST ====');
+    console.log('- Room ID:', id);
+    console.log('- Booking ID:', bookingId);
+    console.log('- Current User:', {
+      id: req.user.id,
+      email: req.user.email,
+      isAdmin: !!req.user.isAdmin
+    });
+    
+    // Find the booking to check permissions
+    const booking = await Booking.findOne({
+      where: {
+        id: bookingId,
+        RoomId: id
+      }
+    })
+    
+    if (!booking) {
+      console.log('Booking not found');
+      return res.status(404).json({ error: 'Booking not found' })
+    }
+    
+    console.log('Booking found:', JSON.stringify(booking, null, 2));
+    
+    // Check all possible user ID fields in the booking
+    const bookingUserId = booking.UserId || booking.userId || booking.user;
+    const requestUserId = req.user.id;
+    
+    console.log('Permission check:');
+    console.log('- User isAdmin:', !!req.user.isAdmin);
+    console.log('- Request User ID:', requestUserId, typeof requestUserId);
+    console.log('- Booking User ID:', bookingUserId, typeof bookingUserId);
+    console.log('- String comparison:', String(bookingUserId) === String(requestUserId));
+    
+    // Get booking user email if available for additional check
+    const bookingUserEmail = booking.userEmail || booking.user_email;
+    const currentUserEmail = req.user.email;
+    console.log('Email check:');
+    console.log('- Request User Email:', currentUserEmail);
+    console.log('- Booking User Email:', bookingUserEmail);
+    
+    // Check if user is authorized to delete this booking
+    // Allow if: user is admin OR user created the booking (check by ID or email)
+    if (!req.user.isAdmin && 
+        String(bookingUserId) !== String(requestUserId) && 
+        bookingUserEmail !== currentUserEmail) {
+      
+      console.log('Permission DENIED - User is not admin and not the booking creator');
+      return res.status(403).json({ 
+        error: 'Unauthorized: Only admins or the booking creator can delete bookings' 
+      })
+    }
+    
+    console.log('Permission GRANTED - Proceeding with deletion');
+    
     // Delete the booking
     await Booking.destroy({
       where: {
@@ -176,6 +231,7 @@ router.delete('/rooms/:id/:bookingId', requireJWT, async (req, res) => {
     
     res.status(201).json(updatedRoom)
   } catch (error) {
+    console.error('Error in delete booking route:', error);
     res.status(400).json({ error: error.message })
   }
 })

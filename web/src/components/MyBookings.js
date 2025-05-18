@@ -27,6 +27,8 @@ function MyBookings({
                 roomData={roomData}
                 bookingData={booking}
                 onDeleteBooking={onDeleteBooking}
+                currentUserEmail={user}
+                isMyBookingsView={true}
               />)
            ) : (<p>You have not yet made any bookings</p>)
         }

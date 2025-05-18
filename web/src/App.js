@@ -140,7 +140,12 @@ class App extends Component {
       })
       .catch(error => {
         console.error('Error deleting booking:', error)
-        alert('Error deleting booking: ' + (error.message || 'Unknown error'))
+        // Check for specific permission errors
+        if (error.message && error.message.includes('Permission denied')) {
+          alert('Permission denied: Only admins or the person who created the booking can delete it')
+        } else {
+          alert('Error deleting booking: ' + (error.message || 'Unknown error'))
+        }
       })
   }
 
@@ -223,11 +228,17 @@ class App extends Component {
       return;
     }
     
-    const userId = this.state.decodedToken.sub;
-    const userEmail = this.state.decodedToken.email;
+    // Get multiple possible user identifiers from token
+    const userId = this.state.decodedToken.sub || this.state.decodedToken.user_id || this.state.decodedToken.id;
+    const userEmail = this.state.decodedToken.email || this.state.decodedToken.user_email;
+    
     console.log('Current user ID from token:', userId);
     console.log('Current user email from token:', userEmail);
     console.log('Room data available:', this.state.roomData.length);
+    
+    if (!userId && !userEmail) {
+      console.log('WARNING: No user ID or email found in token!', this.state.decodedToken);
+    }
     
     // Loop through all the rooms
     this.state.roomData.forEach((room, index) => {
@@ -243,19 +254,33 @@ class App extends Component {
         // Loop through all the bookings in 'room'
         room.bookings.forEach(booking => {
           // Log each booking for debugging
-          console.log(`Checking booking:`, booking);
+          // console.log(`Checking booking:`, booking);
           
-          // Check all possible user ID fields
-          if (booking.user === userId || 
-              booking.userId === userId || 
-              booking.userId === parseInt(userId) || 
-              booking.UserId === userId || 
-              booking.UserId === parseInt(userId) ||
-              booking.user === userEmail ||
-              booking.userEmail === userEmail) {
-            
-            // Push all bookings where the current userId matches into myBookings
+          // Extract all possible ID/email fields from booking
+          const bookingUserId = booking.user || booking.userId || booking.UserId || booking.user_id;
+          const bookingUserEmail = booking.userEmail || booking.user_email;
+          
+          // Compare IDs and emails (case-insensitive for emails)
+          const idMatches = userId && bookingUserId && 
+                           (String(bookingUserId) === String(userId) || 
+                            parseInt(bookingUserId) === parseInt(userId));
+                            
+          const emailMatches = userEmail && bookingUserEmail && 
+                              bookingUserEmail.toLowerCase() === userEmail.toLowerCase();
+          
+          // Check if this booking belongs to the current user
+          if (idMatches || emailMatches) {
+            // Add room ID to the booking for easier reference
             booking.roomId = room._id || room.id;
+            
+            // Make sure the booking has the user info
+            if (!booking.userEmail && userEmail) {
+              booking.userEmail = userEmail;
+            }
+            if (!booking.user && userId) {
+              booking.user = userId;
+            }
+            
             myBookings.push(booking);
             console.log('Found matching booking:', booking);
           }

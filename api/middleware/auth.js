@@ -54,7 +54,8 @@ const signUp = async (req, res, next) => {
       email: req.body.email.toLowerCase(),
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      password: req.body.password
+      password: req.body.password,
+      isAdmin: false
     })
     
     req.user = user
@@ -68,7 +69,8 @@ const signJWTForUser = (req, res) => {
   const user = req.user
   const token = JWT.sign(
     {
-      email: user.email
+      email: user.email,
+      isAdmin: user.isAdmin || false
     },
     jwtSecret,
     {
@@ -89,14 +91,22 @@ passport.use(
     },
     async (payload, done) => {
       try {
+        console.log('JWT Payload:', payload);
         const user = await User.findByPk(payload.sub)
         
         if (user) {
+          console.log('User authenticated:', {
+            id: user.id,
+            email: user.email,
+            isAdmin: user.isAdmin
+          });
           done(null, user)
         } else {
+          console.log('User not found for JWT payload:', payload);
           done(null, false)
         }
       } catch (error) {
+        console.error('JWT authentication error:', error);
         done(error, false)
       }
     }

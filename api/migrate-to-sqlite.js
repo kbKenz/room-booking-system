@@ -20,7 +20,8 @@ async function initDatabase() {
       firstName: 'Admin',
       lastName: 'User',
       email: 'admin@example.com',
-      password: await bcrypt.hash('password', 10)
+      password: await bcrypt.hash('password', 10),
+      isAdmin: true
     })
     
     console.log('Created admin user:', adminUser.email)
