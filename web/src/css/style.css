@@ -628,12 +628,16 @@ li {
   background: #fafafa;
   -webkit-box-shadow: 1px 1px 5px 0px #cecece;
   box-shadow: 1px 1px 5px 0px #cecece;
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   grid-column: 1;
   grid-row: 2;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .header {
   background: #1c1c1c;
@@ -873,9 +877,14 @@ input[type="radio"] {
   grid-column: 2;
   grid-row: 1;
   line-height: 1rem;
-  margin: 2rem 3.5rem;
+  margin: 2rem auto;
   padding: 1rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 .avatar {
   border: 0.1rem solid #d3d3d3;
@@ -892,8 +901,9 @@ input[type="radio"] {
   display: -ms-flexbox;
   display: flex;
   border: 0.1rem solid #cecece;
-  margin: 5rem;
-  width: 100%;
+  margin: 1rem auto;
+  width: 90%;
+  max-width: 800px;
 }
 .booking__innerbox--left {
   color: #1c1c1c;
@@ -923,4 +933,13 @@ input[type="radio"] {
   left: 0;
   right: 0;
   margin: auto;
+}
+
+.user-booking-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem auto;
 }

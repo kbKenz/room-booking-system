@@ -40,6 +40,71 @@ function BookingForm({ onMakeBooking, user, roomData, date, updateCalendar, onSh
     updateCalendar(moment(event)._i)
   }
 
+  // Handle start time change to set end time 1.5 hours later
+  const handleStartTimeChange = (event) => {
+    const startTime = event.target.value
+    const endTimeSelect = document.querySelector('select[name="endTime"]')
+    
+    if (startTime && endTimeSelect) {
+      // Parse the start time value
+      const [hours, minutes] = startTime.split(':').map(num => parseInt(num, 10))
+      
+      // Calculate time 1.5 hours later
+      let endHour = hours
+      let endMinutes = minutes
+      
+      // Add 1.5 hours (90 minutes)
+      endHour += 1
+      endMinutes += 30
+      
+      // Handle minute overflow
+      if (endMinutes >= 60) {
+        endHour += 1
+        endMinutes -= 60
+      }
+      
+      // Format the end time string to match the format in the select options
+      const formattedEndTime = `${endHour}:${endMinutes === 0 ? '00' : endMinutes}`
+      
+      // Find the closest available end time option if exact match isn't available
+      let found = false
+      for (let i = 0; i < endTimeSelectOptions.length; i++) {
+        const option = endTimeSelectOptions[i]
+        if (option.props.value === formattedEndTime) {
+          endTimeSelect.value = formattedEndTime
+          found = true
+          break
+        }
+      }
+      
+      // If exact match not found, find the next available time slot
+      if (!found) {
+        // Find the next available time slot
+        for (let i = 0; i < endTimeSelectOptions.length; i++) {
+          const optionValue = endTimeSelectOptions[i].props.value
+          const [optHours, optMinutes] = optionValue.split(':').map(num => parseInt(num, 10))
+          
+          // Compare times (convert both to minutes for easy comparison)
+          const endTimeInMinutes = (endHour * 60) + endMinutes
+          const optionTimeInMinutes = (optHours * 60) + optMinutes
+          
+          if (optionTimeInMinutes >= endTimeInMinutes) {
+            endTimeSelect.value = optionValue
+            break
+          }
+        }
+      }
+    }
+  }
+  
+  // Set default end time on component render
+  setTimeout(() => {
+    const startTimeSelect = document.querySelector('select[name="startTime"]')
+    if (startTimeSelect) {
+      handleStartTimeChange({ target: { value: startTimeSelect.value } })
+    }
+  }, 100)
+
   return (
     <Fragment>
       <div className="header__page">
@@ -111,7 +176,7 @@ function BookingForm({ onMakeBooking, user, roomData, date, updateCalendar, onSh
           <div className="form__group form__group--margin-top">
             <label className="form__label form__label--booking">
               {'Start time'}
-              <select name="startTime" className="form__input form__input--select">
+              <select name="startTime" className="form__input form__input--select" onChange={handleStartTimeChange}>
                 {startTimeSelectOptions.map(option => {
                   return option
                 })}

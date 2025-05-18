@@ -29,6 +29,27 @@ python seed_data.py
 python manage.py runserver
 ```
 
+## Docker Setup
+
+You can also run this application using Docker:
+
+```
+docker-compose up
+```
+
+The application will automatically:
+
+1. Apply migrations (if needed)
+2. Seed initial data (if needed)
+3. Start the Django server on port 8000
+
+### Docker Details
+
+- The database (SQLite) is persisted in a volume
+- Docker will automatically initialize the database on first run
+- The server listens on 0.0.0.0:8000 inside the container
+- Port 8000 is exposed to the host
+
 ## API Endpoints
 
 ### Authentication
