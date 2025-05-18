@@ -83,12 +83,26 @@ const BookingModal = props => {
     }
   }
   
+  // Get the booker's information using available properties
+  const getBookerInfo = () => {
+    if (!props.selectedBooking) return 'Unknown'
+    
+    // Try all possible properties where the user/booker info might be stored
+    return props.selectedBooking.user_email || 
+           props.selectedBooking.userEmail || 
+           (props.selectedBooking.user && props.selectedBooking.user.email) ||
+           props.selectedBooking.bookedBy ||
+           props.user || 
+           'Not specified'
+  }
+  
   // Only render if we have a selected booking
   if (!props.selectedBooking) {
     return null
   }
   
   const roomInfo = getRoomInfo()
+  const bookerInfo = getBookerInfo()
   
   return (
     <ReactModal
@@ -105,7 +119,7 @@ const BookingModal = props => {
       <h3 className="modal__title">Booking Details</h3>
       <div className="modal__boday">
         <p className="modal__paragraph">
-          {roomInfo.name}{', Level '}{roomInfo.floor}
+          {roomInfo.name}{', Floor '}{roomInfo.floor}
         </p>
         <p className="modal__paragraph">
           {formatBookingTime()}
@@ -114,13 +128,16 @@ const BookingModal = props => {
           {formatBookingDate()}
         </p>
         <p className="modal__paragraph">
+          <strong>Booked by: </strong>{bookerInfo}
+        </p>
+        <p className="modal__paragraph">
           <strong>Purpose </strong>{props.selectedBooking.purpose || 'Not specified'}
         </p>
         <p className="modal__paragraph">
           <strong>Description </strong>{props.selectedBooking.description || 'No description provided'}
         </p>
       </div>
-      <a href={`mailto:${props.user}`} className="button">Contact</a>
+      <a href={`mailto:${bookerInfo}`} className="button">Contact</a>
       <Button
         onClick={deleteBooking}
         text={`Delete`}

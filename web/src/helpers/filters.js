@@ -73,7 +73,9 @@ export const onFilterByCapacity = (params, filteredData) => {
 
 // Filter data by availability
 export const onFilterByAvailablity = (params, filteredData) => {
-  if (params === 'fullyAvail') {
+  if (params === 'all') {
+    return filteredData
+  } else if (params === 'fullyAvail') {
     filteredData = filteredData.filter(room => room.bookings.length === 0)
   } else if (params === 'partAvail') {
     filteredData = filteredData.filter(room => room.bookings.length > 0)

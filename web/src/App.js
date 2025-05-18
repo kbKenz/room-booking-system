@@ -43,7 +43,7 @@ class App extends Component {
     filterParams: filterParams,
     capacityParams: capacityParams,
     floorParam: 'all',
-    availabilityParam: null,
+    availabilityParam: 'all',
     filteredData: null,
     checked: null,
     currentRoom: null,
