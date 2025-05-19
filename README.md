@@ -355,7 +355,7 @@ This application is configured for deployment on Render.
 3. Render will automatically detect the `render.yaml` configuration file and set up:
 
    - A web service for the Django API
-   - A PostgreSQL database
+   - The system will use SQLite as the database
 
 4. Render will:
    - Install dependencies from requirements.txt
@@ -368,22 +368,18 @@ The following environment variables are configured in `render.yaml`:
 
 - `SECRET_KEY`: Auto-generated secure key
 - `DEBUG`: Set to False for production
-- `DATABASE_URL`: Connection string to the PostgreSQL database
 - `PYTHON_VERSION`: Set to 3.11.0
 
 ### Manual Setup (Alternative)
 
 If you prefer to set up services manually:
 
-1. Create a PostgreSQL database on Render
-
-2. Create a web service with:
+1. Create a web service with:
    - Build Command: `bash build.sh`
    - Start Command: `cd django_room_booking_api && gunicorn room_booking_api.wsgi:application`
    - Environment Variables:
      - SECRET_KEY (generate a secure random key)
      - DEBUG=False
-     - DATABASE_URL (copy from your PostgreSQL instance)
      - RENDER_EXTERNAL_HOSTNAME (will be set automatically by Render)
 
 ### Frontend Configuration

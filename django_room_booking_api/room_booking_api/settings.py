@@ -14,7 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
-import dj_database_url
+# Remove database URL import as we're using SQLite
 
 # Load environment variables
 load_dotenv()
@@ -100,14 +100,9 @@ DATABASES = {
     }
 }
 
-# Use PostgreSQL on Render
-DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL:
-    DATABASES['default'] = dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+# Database configuration for Render
+# Using SQLite for deployment
+# No additional configuration needed
 
 
 # Password validation
