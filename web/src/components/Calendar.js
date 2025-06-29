@@ -1,17 +1,18 @@
-import React from 'react'
-import Datetime from 'react-datetime'
+import React from "react";
+import Datetime from "react-datetime";
 
-const validDate = current => current.day() !== 0
+const validDate = (current) => current.day() !== 0;
 
-const Calendar = props => (
+const Calendar = (props) => (
   <Datetime
+    value={props.calendarDate}
     dateFormat="YYYY-MM-DD"
     timeFormat={false}
     input={false}
     utc={false}
-    onChange={event => props.setCalendarDate(event._d)}
+    onChange={(event) => props.setCalendarDate(event._d)}
     isValidDate={validDate}
   />
-)
+);
 
-export default Calendar
+export default Calendar;
