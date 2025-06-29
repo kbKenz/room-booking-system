@@ -4,4 +4,7 @@ djangorestframework-simplejwt==5.3.0
 django-cors-headers==4.3.1
 python-dotenv==1.0.0
 pytz==2023.3
-Pillow==10.1.0 
+Pillow==9.5.0
+whitenoise==6.9.0
+setuptools==80.9.0
+gunicorn==21.2.0 
