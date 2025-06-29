@@ -28,20 +28,52 @@ def seed_data():
     Room.objects.all().delete()
     print("Cleared existing rooms")
 
-    # Create the 56 rooms from the old API
+    # Create the new room structure based on updated requirements
     rooms_data = [
-        {"name": "Room 1", "floor": "1", "capacity": 18, "assets": {"pcLab": True}},
-        {"name": "Room 2", "floor": "1", "capacity": 18, "assets": {"projector": True}},
+        # Floor 1 (100s)
         {
-            "name": "Room 3",
+            "name": "Room 105",
             "floor": "1",
-            "capacity": 18,
-            "assets": {"projector": True, "opWalls": True},
+            "capacity": 16,  # 8x2
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": True,  # Interactive board
+            },
         },
         {
-            "name": "Room 4",
+            "name": "Room 103",
             "floor": "1",
-            "capacity": 24,
+            "capacity": 72,
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": True,  # Interactive board
+            },
+        },
+        {
+            "name": "Room 104",
+            "floor": "1",
+            "capacity": 21,
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": True,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
+        },
+        {
+            "name": "Room 101",
+            "floor": "1",
+            "capacity": 8,  # Office - small capacity
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -51,9 +83,74 @@ def seed_data():
                 "whiteBoard": False,
             },
         },
-        {"name": "Room 5", "floor": "1", "capacity": 18, "assets": {"opWalls": True}},
+        # Floor 2 (200s)
         {
-            "name": "Room 1",
+            "name": "Room 201",
+            "floor": "2",
+            "capacity": 30,
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": True,  # Projector/monitors
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
+        },
+        {
+            "name": "Room 202",
+            "floor": "2",
+            "capacity": 18,
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": True,  # Monitors projector
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
+        },
+        {
+            "name": "Room 203",
+            "floor": "2",
+            "capacity": 18,
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": True,  # Monitors (treating as projector capability)
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
+        },
+        {
+            "name": "Room 207",
+            "floor": "2",
+            "capacity": 17,
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": True,  # TV/board
+                "opWalls": False,
+                "whiteBoard": True,  # Board
+            },
+        },
+        {
+            "name": "Room 206",
+            "floor": "2",
+            "capacity": 8,  # Office
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
+        },
+        {
+            "name": "Room 204",
             "floor": "2",
             "capacity": 18,
             "assets": {
@@ -62,66 +159,14 @@ def seed_data():
                 "projector": False,
                 "tv": False,
                 "opWalls": False,
-                "whiteBoard": False,
+                "whiteBoard": True,  # Interactive board
             },
         },
+        # Floor 3 (300s)
         {
-            "name": "Room 2",
-            "floor": "2",
-            "capacity": 18,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Room 3",
-            "floor": "2",
-            "capacity": 18,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Room 4",
-            "floor": "2",
-            "capacity": 18,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Room 5",
-            "floor": "2",
-            "capacity": 18,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {"name": "Room 1", "floor": "3", "capacity": 18, "assets": {"tv": True}},
-        {
-            "name": "Room 2",
+            "name": "Room 302",
             "floor": "3",
-            "capacity": 18,
+            "capacity": 100,  # Hall - large capacity
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -131,12 +176,10 @@ def seed_data():
                 "whiteBoard": False,
             },
         },
-        {"name": "Room 3", "floor": "3", "capacity": 18, "assets": {"tv": True}},
-        {"name": "Room 4", "floor": "3", "capacity": 18, "assets": {"tv": True}},
         {
-            "name": "Studio 1",
+            "name": "Room 307",
             "floor": "3",
-            "capacity": 18,
+            "capacity": 8,  # Office
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -147,9 +190,9 @@ def seed_data():
             },
         },
         {
-            "name": "Studio 2",
+            "name": "Room 308",
             "floor": "3",
-            "capacity": 18,
+            "capacity": 8,  # Office
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -159,24 +202,63 @@ def seed_data():
                 "whiteBoard": False,
             },
         },
-        {"name": "Lab 1", "floor": "3", "capacity": 20, "assets": {"macLab": True}},
-        {"name": "Room 1", "floor": "4", "capacity": 20, "assets": {"opWalls": True}},
-        {"name": "Room 2", "floor": "4", "capacity": 20, "assets": {"opWalls": True}},
-        {"name": "Room 3", "floor": "4", "capacity": 20, "assets": {"opWalls": True}},
         {
-            "name": "Room 4",
+            "name": "Room 304",
+            "floor": "3",
+            "capacity": 8,  # Office
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
+        },
+        {
+            "name": "Room 305",
+            "floor": "3",
+            "capacity": 8,  # Office
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
+        },
+        {
+            "name": "Room 306",
+            "floor": "3",
+            "capacity": 8,  # Office
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
+        },
+        # Floor 4 (400s) - All offices
+        {
+            "name": "Room 401",
             "floor": "4",
-            "capacity": 20,
-            "assets": {"projector": True, "opWalls": True},
+            "capacity": 8,  # Office
+            "assets": {
+                "macLab": False,
+                "pcLab": False,
+                "projector": False,
+                "tv": False,
+                "opWalls": False,
+                "whiteBoard": False,
+            },
         },
-        {"name": "Room 5", "floor": "4", "capacity": 20, "assets": {"projector": True}},
-        {"name": "Room 6", "floor": "4", "capacity": 20, "assets": {"projector": True}},
-        {"name": "Room 7", "floor": "4", "capacity": 20, "assets": {"projector": True}},
-        {"name": "Room 8", "floor": "4", "capacity": 40, "assets": {"projector": True}},
         {
-            "name": "Room 9",
+            "name": "Room 402",
             "floor": "4",
-            "capacity": 16,
+            "capacity": 8,  # Office
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -187,9 +269,9 @@ def seed_data():
             },
         },
         {
-            "name": "Room 10",
+            "name": "Room 403",
             "floor": "4",
-            "capacity": 20,
+            "capacity": 8,  # Office
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -200,9 +282,9 @@ def seed_data():
             },
         },
         {
-            "name": "Room 11",
+            "name": "Room 405",
             "floor": "4",
-            "capacity": 18,
+            "capacity": 8,  # Office
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -212,11 +294,10 @@ def seed_data():
                 "whiteBoard": False,
             },
         },
-        {"name": "Room 12", "floor": "4", "capacity": 18, "assets": {"tv": True}},
         {
-            "name": "Room 13",
+            "name": "Room 406",
             "floor": "4",
-            "capacity": 18,
+            "capacity": 8,  # Office
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -226,12 +307,10 @@ def seed_data():
                 "whiteBoard": False,
             },
         },
-        {"name": "Room 14", "floor": "4", "capacity": 18, "assets": {"tv": True}},
-        {"name": "Room 15", "floor": "4", "capacity": 18, "assets": {"tv": True}},
         {
-            "name": "Studio 11",
+            "name": "Room 407",
             "floor": "4",
-            "capacity": 18,
+            "capacity": 8,  # Office
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -242,9 +321,9 @@ def seed_data():
             },
         },
         {
-            "name": "Studio 12",
+            "name": "Room 404",
             "floor": "4",
-            "capacity": 18,
+            "capacity": 8,  # Office
             "assets": {
                 "macLab": False,
                 "pcLab": False,
@@ -253,167 +332,15 @@ def seed_data():
                 "opWalls": False,
                 "whiteBoard": False,
             },
-        },
-        {
-            "name": "Studio 13",
-            "floor": "4",
-            "capacity": 18,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Studio 14",
-            "floor": "4",
-            "capacity": 18,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Studio 15",
-            "floor": "4",
-            "capacity": 18,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {"name": "Lab 01", "floor": "4", "capacity": 20, "assets": {"macLab": True}},
-        {"name": "Room 1", "floor": "13", "capacity": 20, "assets": {"opWalls": True}},
-        {"name": "Room 2", "floor": "13", "capacity": 20, "assets": {"opWalls": True}},
-        {"name": "Room 3", "floor": "13", "capacity": 20, "assets": {"opWalls": True}},
-        {
-            "name": "Room 4",
-            "floor": "13",
-            "capacity": 20,
-            "assets": {"projector": True, "opWalls": True},
-        },
-        {
-            "name": "Room 5",
-            "floor": "13",
-            "capacity": 20,
-            "assets": {"projector": True},
-        },
-        {
-            "name": "Room 6",
-            "floor": "13",
-            "capacity": 20,
-            "assets": {"projector": True},
-        },
-        {
-            "name": "Room 7",
-            "floor": "13",
-            "capacity": 20,
-            "assets": {"projector": True},
-        },
-        {
-            "name": "Room 8/9",
-            "floor": "13",
-            "capacity": 40,
-            "assets": {"projector": True},
-        },
-        {
-            "name": "Room 10",
-            "floor": "13",
-            "capacity": 16,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Room 11",
-            "floor": "13",
-            "capacity": 20,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Room 12",
-            "floor": "13",
-            "capacity": 20,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {"name": "Room 13", "floor": "13", "capacity": 20, "assets": {"macLab": True}},
-        {"name": "Room 14", "floor": "13", "capacity": 20, "assets": {"pcLab": True}},
-        {"name": "Room 15", "floor": "13", "capacity": 20, "assets": {"pcLab": True}},
-        {"name": "Room 16", "floor": "13", "capacity": 20, "assets": {"pcLab": True}},
-        {
-            "name": "Room 17",
-            "floor": "13",
-            "capacity": 20,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Room 18",
-            "floor": "13",
-            "capacity": 20,
-            "assets": {
-                "macLab": False,
-                "pcLab": False,
-                "projector": False,
-                "tv": False,
-                "opWalls": False,
-                "whiteBoard": False,
-            },
-        },
-        {
-            "name": "Green Screen Room",
-            "floor": "13",
-            "capacity": None,
-            "assets": {"tv": True},
         },
     ]
 
-    # Set created and updated timestamps to match the old API
-    now = datetime.datetime.now()
+    # Create rooms
     for room_data in rooms_data:
-        room = Room(**room_data)
-        room.created_at = now
-        room.updated_at = now
-        room.save()
-        print(f"Created room: {room.name} (Floor {room.floor})")
+        room = Room.objects.create(**room_data)
+        print(f"Created room: {room.name} on floor {room.floor}")
 
-    print("Seeding completed!")
+    print(f"Seeded {len(rooms_data)} rooms successfully!")
 
 
 if __name__ == "__main__":
