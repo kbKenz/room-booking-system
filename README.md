@@ -1,6 +1,6 @@
 # Room Booking System
-
-A room booking system built with MongoDB, Express, Node.js and ReactJS.
+this is a test edition of the file
+A room booking system built with random word and MongoDB, Express, Node.js and ReactJS.
 
 ![Logo](docs/logo.png)
 
